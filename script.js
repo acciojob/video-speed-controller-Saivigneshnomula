@@ -17,8 +17,11 @@ function togglePlay() {
 
 // Update Play/Pause Button Text
 function updateButton() {
-    const icon = video.paused ? "►" : "❚ ❚";
-    playButton.innerHTML = icon;
+    if (video.paused) {
+        playButton.textContent = "►";
+    } else {
+        playButton.textContent = "❚ ❚";
+    }
 }
 
 // Update Progress Bar
