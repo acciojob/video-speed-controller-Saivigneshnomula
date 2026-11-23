@@ -1,2 +1,14 @@
 
 /* Your CSS Code here. */
+.progress {
+    display: flex;
+    height: 10px;
+    background: #ccc;
+    cursor: pointer;
+}
+
+.progress__filled {
+    flex-basis: 0%;
+    background: red;
+    transition: flex-basis 0.1s;
+}
