@@ -1,12 +1,13 @@
 
-const player = document.querySelector(".player");
-const video = player.querySelector(".viewer");
-const playButton = player.querySelector(".toggle");
-const progress = player.querySelector(".progress");
-const progressBar = player.querySelector(".progress__filled");
-const volume = player.querySelector('input[name="volume"]');
-const playbackSpeed = player.querySelector('input[name="playbackSpeed"]');
-const skipButtons = player.querySelectorAll("[data-skip]");
+const video = document.querySelector(".player__video");
+const playButton = document.querySelector(".player__button.toggle");
+const progress = document.querySelector(".progress");
+const progressBar = document.querySelector(".progress__filled");
+
+const volume = document.querySelector('input[name="volume"]');
+const playbackSpeed = document.querySelector('input[name="playbackSpeed"]');
+
+const skipButtons = document.querySelectorAll("[data-skip]");
 
 // Play and Pause
 function togglePlay() {
@@ -26,30 +27,30 @@ function updateButton() {
 function updateProgress() {
     const percent = (video.currentTime / video.duration) * 100;
 
+    progressBar.style.width = percent + "%";
     progressBar.style.flexBasis = percent + "%";
 }
 
 // Volume Control
 function changeVolume() {
-    video.volume = volume.value;
+    video.volume = Number(volume.value);
 }
 
 // Playback Speed
 function changeSpeed() {
-    video.playbackRate = playbackSpeed.value;
+    video.playbackRate = Number(playbackSpeed.value);
 }
 
-// Skip Video
+// Skip Forward and Rewind
 function skipVideo() {
     video.currentTime += Number(this.dataset.skip);
 }
 
-// Seek Video
+// Progress Bar Seek
 function scrubVideo(event) {
-    const scrubTime =
-        (event.offsetX / progress.offsetWidth) * video.duration;
+    const percent = event.offsetX / progress.offsetWidth;
 
-    video.currentTime = scrubTime;
+    video.currentTime = percent * video.duration;
 }
 
 // Event Listeners
@@ -71,6 +72,5 @@ skipButtons.forEach(button => {
 
 progress.addEventListener("click", scrubVideo);
 
-// Initial update
+// Initial State
 updateButton();
-updateProgress();
