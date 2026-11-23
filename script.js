@@ -1,19 +1,12 @@
 const video = document.querySelector(".player__video");
-
 const playButton = document.querySelector(".player__button");
-
 const progress = document.querySelector(".progress");
-
 const progressBar = document.querySelector(".progress__filled");
-
 const volume = document.querySelector('input[name="volume"]');
-
 const playbackSpeed = document.querySelector('input[name="playbackSpeed"]');
-
 const skipButtons = document.querySelectorAll("[data-skip]");
 
-
-// 1. Play and Pause
+// Play and Pause
 function togglePlay() {
     if (video.paused) {
         video.play();
@@ -22,63 +15,51 @@ function togglePlay() {
     }
 }
 
-
-// Change button symbol
+// Update Play/Pause Button Text
 function updateButton() {
     const icon = video.paused ? "►" : "❚ ❚";
-
-    playButton.textContent = icon;
+    playButton.innerHTML = icon;
 }
 
-
-// 2. Update progress bar
+// Update Progress Bar
 function updateProgress() {
     const percentage = (video.currentTime / video.duration) * 100;
-
     progressBar.style.width = `${percentage}%`;
 }
 
-
-// 3. Control volume
+// Change Volume
 function changeVolume() {
     video.volume = volume.value;
 }
 
-
-// 4. Control playback speed
+// Change Playback Speed
 function changeSpeed() {
     video.playbackRate = playbackSpeed.value;
 }
 
-
-// 5. Skip forward or backward
+// Skip Video
 function skipVideo() {
     video.currentTime += Number(this.dataset.skip);
 }
 
-
-// 6. Click progress bar to seek
+// Click Progress Bar to Seek
 function scrubVideo(event) {
     const scrubTime = (event.offsetX / progress.offsetWidth) * video.duration;
-
     video.currentTime = scrubTime;
 }
 
-
-// Event listeners
+// Event Listeners
 
 video.addEventListener("click", togglePlay);
-
 playButton.addEventListener("click", togglePlay);
 
 video.addEventListener("play", updateButton);
-
 video.addEventListener("pause", updateButton);
+video.addEventListener("ended", updateButton);
 
 video.addEventListener("timeupdate", updateProgress);
 
 volume.addEventListener("input", changeVolume);
-
 playbackSpeed.addEventListener("input", changeSpeed);
 
 skipButtons.forEach(button => {
@@ -86,3 +67,6 @@ skipButtons.forEach(button => {
 });
 
 progress.addEventListener("click", scrubVideo);
+
+// Initial Button State
+updateButton();
