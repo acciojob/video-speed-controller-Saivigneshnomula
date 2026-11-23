@@ -26,8 +26,8 @@ function updateButton() {
 
 // Update Progress Bar
 function updateProgress() {
-    const percentage = (video.currentTime / video.duration) * 100;
-    progressBar.style.width = `${percentage}%`;
+    const percent = (video.currentTime / video.duration) * 100;
+    document.querySelector(".progress__filled").style.flexBasis = `${percent}%`;
 }
 
 // Change Volume
